@@ -1,0 +1,51 @@
+/********************************************
+Name of DS: Mr.Muhammad Fahmi Rosnan (MFR)
+Name of SAS program: myprogram_dm_mar_2022_mfr.sas
+Description:  Learning SAS
+Date first written: Tue,1-Mar-2022
+Date last updated: Mon,14-Mar-2022
+Folder name: DM_CT_MAR_2022_PROJECT_AMIE
+Permanent Library name:DMLIBPDK
+***********************************************/
+
+/********************************************
+Question 10.1
+Add a new department to the DEPARTMENT_DS. Details: (dept_no = 50; dept_name=’Physics’; dept_location = ‘Kuala Lumpur’)
+ANSWER:
+***********************************************/
+
+TITLE1 'STEP 1: Make a back-up of the dataset DMLIBPDK.DEPARTMENT_DS';
+
+PROC SQL;
+
+CREATE TABLE DMLIBPDK.DEPARTMENT_DS_BK AS
+SELECT *
+FROM DMLIBPDK.DEPARTMENT_DS;
+
+QUIT;
+
+TITLE1 'STEP 2: Remove the unwanted variable(s) found inside the dataset DMLIBPDK.DEPARTMENT_DS';
+
+PROC SQL;
+
+ALTER TABLE DMLIBPDK.DEPARTMENT_DS
+DROP D,E,F,G,H,I;
+
+QUIT;
+
+TITLE1 'STEP 3: Add a new department to the DEPARTMENT_DS. Details: (dept_no = 50; dept_name=’Physics’; dept_location = ‘Kuala Lumpur’)';
+
+PROC SQL;
+
+INSERT INTO DMLIBPDK.DEPARTMENT_DS(dept_no, dept_name, dept_loc)
+VALUES(50,'Physics','Kuala Lumpur');
+
+QUIT;
+
+TITLE1 'STEP 4: Delete the dataset DMLIBPDK.DEPARTMENT_DS_BK along with its data dictionary';
+
+PROC SQL;
+
+DROP TABLE DMLIBPDK.DEPARTMENT_DS_BK; /* DMLIBPDK.DEPARTMENT_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+
+QUIT;

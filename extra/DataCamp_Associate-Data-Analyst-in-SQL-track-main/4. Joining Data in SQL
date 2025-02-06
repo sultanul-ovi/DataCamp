@@ -1,0 +1,89 @@
+========================CHAPTER 1
+INNER JOIN.
+Join enables us to draw info from separate tables together into a single, meaningful set of results.
+INNER JOIN looks for records in both tables which match on a given field
+{10. Our first INNER JOIN
+02:42 - 03:37
+The syntax for performing an INNER JOIN on our tables is shown step-by-step. It is common to begin constructing the query with the join first, and selecting fields later. After FROM, we list the left table, followed by the INNER JOIN keyword and the right table. We then specify the field to match the tables on, using the ON keyword. Here, we use the "country" field. Lastly, we add SELECT at the start of the query and choose the fields we want returned. }
+NOTE==table.column_name must be used when selecting columns that exist in both tables to void SQL error
+------------------------------------
+--inner join of presidents and prime_ministers, joining on country
+SELECT prime_ministers.country, prime_ministers.continent, prime_minister, president
+FROM prime_ministers
+INNER JOIN presidents
+ON prime_ministers.country = presidents.country
+
+
+
+=EXERCISE=Perform an inner join with the cities table on the left and the countries table on the right; do not alias tables here or in the next step.
+Identify the relevant column names to join ON by inspecting the cities and countries tabs in the console.
+SELECT * 
+FROM cities
+-- Inner join to countries
+INNER JOIN countries
+-- Match on country codes
+ON  countries.code = cities.country_code
+ 
+
+
+ALIASING TABLES IN INNER JOIN
+Before we end this lesson, let's add one more SQL shortcut to make our query even more concise. When joining on two identical column names, we can employ the USING command followed by the shared column name in parentheses. Here, since the join field is named "country" in both tables, we can use USING.
+-----------------------------------
+--inner join of presidents and prime_ministers, joining on country
+SELECT p1.country, p1.continent, prime_minister, president
+FROM prime_ministers AS p1
+INNER JOIN presidents AS p2
+ON prime_ministers.country = presidents.country
+USING (country);
+
+
+=EXERCISE=Complete the SELECT statement to keep only the name of the city, the name of the country, and the region the country is located in (in the order specified).
+Alias the name of the city AS city and the name of the country AS country.
+-- Select fields with aliases
+SELECT c.code AS country_code, c.name, e.year, e.inflation_rate
+FROM countries AS c
+-- Join to economies (alias e)
+INNER JOIN economies AS e
+-- Match on code field using table aliases
+ON c.code = e.code;
+
+
+=EXERCISE=Use the country code field to complete the INNER JOIN with USING; do not change any alias names.
+SELECT c.name AS country, l.name AS language, official
+FROM countries AS c
+INNER JOIN languages AS l
+-- Match using the code column
+USING (code);
+
+
+
+
+
+
+========================CHAPTER 2
+
+
+
+
+
+
+========================CHAPTER 3
+
+
+
+
+
+
+========================CHAPTER 4
+
+
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\
+ What you've learned
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+======================================================
+======================================================

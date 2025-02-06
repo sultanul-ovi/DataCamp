@@ -1,0 +1,48 @@
+ARTIST DATABASE SCHEMA
+
+Artists:
+
+assigned_artist_id (Primary Key)
+artist_name
+social_handle
+email
+address
+gender
+debut_year
+country
+
+Song_producer:
+
+producer_name
+song_title
+year int
+artist_name
+
+Genre:
+
+song_title(primary key)
+genre
+assigned_artist_id
+
+song_distribution:
+
+song_id (Primary key)
+song_title
+assigned_artist_id (Foreign key referencing Artist table)
+artist_name
+spotify_stream
+youtube_views
+producer_name
+updated_debut_year
+
+record_label (Primary key):
+
+label_name
+assigned_artist_id (Foreign key)
+artist_name (referencing Artist table)
+country
+
+geolocation:
+
+country
+continent

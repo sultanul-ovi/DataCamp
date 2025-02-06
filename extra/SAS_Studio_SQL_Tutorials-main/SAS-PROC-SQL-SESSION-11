@@ -1,0 +1,315 @@
+/********************************************
+Name of DS: Mr.Muhammad Fahmi Rosnan (MFR)
+Name of SAS program: myprogram_dm_mar_2022_mfr.sas
+Description:  Learning SAS
+Date first written: Tue,1-Mar-2022
+Date last updated: Mon,14-Mar-2022
+Folder name: DM_CT_MAR_2022_PROJECT_AMIE
+Permanent Library name:DMLIBPDK
+***********************************************/
+
+/********************************************
+Question 11.1
+Delete the details of the employee ‘JONES’.
+
+Reminder: Before or you going to change anything like 
+deletion - delete
+insertion - add
+updation - update/edit
+
+*** you must create a back-up table or copy
+
+ANSWER:
+***********************************************/
+
+TITLE1 'STEP 1: Make a back-up of the dataset DMLIBPDK.EMPLOYEE_DS';
+
+PROC SQL;
+
+CREATE TABLE DMLIBPDK.EMPLOYEE_DS_BK AS
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+TITLE1 'STEP 2: Remove the unwanted variable(s) found inside the dataset DMLIBPDK.DEPARTMENT_DS';
+
+PROC SQL;
+
+ALTER TABLE DMLIBPDK.EMPLOYEE_DS_BK
+DROP H,I,J;
+
+QUIT;
+
+TITLE1 'STEP 3: Find the profile of the Ms.JONES';
+
+PROC SQL;
+
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name EQ 'JONES' );
+
+QUIT;
+
+TITLE1 'STEP 4: Delete the details of Ms.Jones.';
+
+PROC SQL;
+
+DELETE FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name EQ 'JONES' );
+/* Then run back the step 3 */
+
+QUIT;
+
+TITLE1 'STEP 5: Delete the dataset DMLIBPDK.EMPLOYEE_DS_BK along with its data dictionary';
+
+PROC SQL;
+
+DROP TABLE DMLIBPDK.EMPLOYEE_DS_BK; /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+
+QUIT;
+
+/********************************************
+Question 11.2
+Delete the details of the employees, whose salary is between 1200 and 1500.
+
+Reminder: Before or you going to change anything like 
+deletion - delete
+insertion - add
+updation - update/edit
+
+*** you must create a back-up table or copy
+
+ANSWER:
+***********************************************/
+
+TITLE1 'STEP 1: Make a back-up of the dataset DMLIBPDK.EMPLOYEE_DS';
+
+PROC SQL;
+
+CREATE TABLE DMLIBPDK.EMPLOYEE_DS_BK AS
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+TITLE1 'STEP 2: Find the details of the employees, whose salary is between 1200 and 1500';
+
+PROC SQL;
+
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_salary between 1200 and 1500 );
+
+QUIT;
+
+TITLE1 'STEP 3: Delete the details of the employees, whose salary is between 1200 and 1500';
+
+PROC SQL;
+
+DELETE FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_salary between 1200 and 1500 );
+/* Then run back the step 2 */
+
+QUIT;
+
+TITLE1 'STEP 4: Delete the dataset DMLIBPDK.EMPLOYEE_DS_BK along with its data dictionary';
+
+PROC SQL;
+
+DROP TABLE DMLIBPDK.EMPLOYEE_DS_BK; /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+
+QUIT;
+
+/********************************************
+Question 11.3
+Delete the details of the employees, who are working in department number 10.
+
+Reminder: Before or you going to change anything like 
+deletion - delete
+insertion - add
+updation - update/edit
+
+*** you must create a back-up table or copy
+
+ANSWER:
+***********************************************/
+
+TITLE1 'STEP 1: Make a back-up of the dataset DMLIBPDK.EMPLOYEE_DS';
+
+PROC SQL;
+
+CREATE TABLE DMLIBPDK.EMPLOYEE_DS_BK AS
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+TITLE1 'STEP 2: Find the details of employees, who are working in department number 10';
+
+PROC SQL;
+
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( dept_no EQ 10 );
+
+QUIT;
+
+TITLE1 'STEP 3: Delete the details of the employees, who are working in department number 10';
+
+PROC SQL;
+
+DELETE FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( dept_no EQ 10 );
+/* Then run back the step 2 */
+
+QUIT;
+
+TITLE1 'STEP 4: Delete the dataset DMLIBPDK.EMPLOYEE_DS_BK along with its data dictionary';
+
+PROC SQL;
+
+DROP TABLE DMLIBPDK.EMPLOYEE_DS_BK; /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+
+QUIT;
+
+/* Lets say you suddenly drop table DMLIBPDK.EMPLOYEE_DS but not DMLIBPDK.EMPLOYEE_DS_BK. 
+   What should you do?
+   - Go to step 1 and reverse the order of origin dataset with back-up dataset
+   - Then, run over again
+   - Issues solved
+   eg:
+   CREATE TABLE DMLIBPDK.EMPLOYEE_DS AS
+   SELECT *
+   FROM DMLIBPDK.EMPLOYEE_DS_BK;
+*/
+
+/********************************************
+Question 11.4
+Delete the details of the employees, who are working at the ‘NEW YORK’ department.
+
+Reminder: Before or you going to change anything like 
+deletion - delete
+insertion - add
+updation - update/edit
+
+*** you must create a back-up table or copy
+
+ANSWER:
+***********************************************/
+TITLE1 'STEP 1: Make a back-up of the dataset DMLIBPDK.EMPLOYEE_DS';
+
+PROC SQL;
+
+CREATE TABLE DMLIBPDK.EMPLOYEE_DS_BK AS /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+TITLE1 'STEP 2: Below are the details of those who are working in the ‘NEW YORK’ department';
+TITLE2 'Efficient way';
+PROC SQL;
+
+SELECT dept_no Label = 'Department Number'
+FROM DMLIBPDK.DEPARTMENT_DS
+WHERE ( dept_loc EQ 'NEW YORK' );
+/* Above a sub-program to find the department number of the department located at New York */
+
+QUIT;
+
+TITLE1 'STEP 3: Combine the efficient sub-program with EMPLOYEE_DS';
+
+PROC SQL;
+
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( dept_no EQ ( SELECT dept_no Label = 'Department Number'
+	    			 FROM DMLIBPDK.DEPARTMENT_DS
+	    			 WHERE ( dept_loc EQ 'NEW YORK' ) ) );
+
+QUIT;
+
+TITLE1 'STEP 4: Delete the details of the employees, who are working at the ‘NEW YORK’ department';
+
+PROC SQL;
+
+DELETE FROM DMLIBPDK.DEPARTMENT_DS
+WHERE ( dept_no EQ ( SELECT dept_no Label = 'Department Number'
+	    			 FROM DMLIBPDK.DEPARTMENT_DS
+	    			 WHERE ( dept_loc EQ 'NEW YORK' ) ) );
+					 /* Above a sub-program to find the department number of the department located at New York */
+QUIT;
+
+TITLE1 'STEP 5: Delete the dataset DMLIBPDK.EMPLOYEE_DS_BK along with its data dictionary';
+
+PROC SQL;
+
+DROP TABLE DMLIBPDK.EMPLOYEE_DS_BK; /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+
+QUIT;
+
+/********************************************
+Question 11.5
+Delete the details of all employees, without deleting the data dictionary of the dataset EMPLOYEE_DS. 
+
+Reminder: Before or you going to change anything like 
+deletion - delete
+insertion - add
+updation - update/edit
+
+*** you must create a back-up table or copy
+
+ANSWER:
+***********************************************/
+
+TITLE1 'STEP 1: Make a back-up of the dataset DMLIBPDK.EMPLOYEE_DS';
+
+PROC SQL;
+
+CREATE TABLE DMLIBPDK.EMPLOYEE_DS_BK AS /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+TITLE1 'STEP 2: Delete the details of all employees, without deleting the data dictionary of the dataset EMPLOYEE_DS';
+
+PROC SQL;
+
+DELETE FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+/********************************************
+Question 11.6
+Delete the details of all employees, along with the data dictionary of the dataset EMPLOYEE_DS.  
+
+Reminder: Before or you going to change anything like:
+ 
+deletion - delete
+insertion - add
+updation - update/edit
+
+*** you must create a back-up table or copy
+
+ANSWER:
+***********************************************/
+
+TITLE1 'STEP 1: Make a back-up of the dataset DMLIBPDK.EMPLOYEE_DS';
+
+PROC SQL;
+
+CREATE TABLE DMLIBPDK.EMPLOYEE_DS_BK AS /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+TITLE1 'STEP 2: Delete the details of all employees, along with the data dictionary of the dataset EMPLOYEE_DS';
+
+PROC SQL;
+
+DROP TABLE DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;

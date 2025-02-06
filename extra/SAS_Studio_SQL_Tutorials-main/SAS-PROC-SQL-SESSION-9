@@ -1,0 +1,179 @@
+/********************************************
+Name of DS: Mr.Muhammad Fahmi Rosnan (MFR)
+Name of SAS program: myprogram_dm_mar_2022_mfr.sas
+Description:  Learning SAS
+Date first written: Tue,1-Mar-2022
+Date last updated: Mon,14-Mar-2022
+Folder name: DM_CT_MAR_2022_PROJECT_AMIE
+Permanent Library name:DMLIBPDK
+***********************************************/
+
+/********************************************
+QUESTION 9.1 
+Increase all staff salary by 10% for those who work in the department number 10.
+Dataset: EMPLOYEE_DS, not DEPARTMENT_DS, why? : because in department there is no variable name emp_salary or salary in this dataset.
+Affected variable: emp_salary
+ANSWER:
+***********************************************/
+PROC SQL;
+
+TITLE1 'STEP 1: Make a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS';
+
+CREATE TABLE DMLIBPDK.EMPLOYEE_DS_BK AS /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+PROC SQL;
+
+TITLE1 'STEP 2: Below are the details of the employees, who are working at the department number 10.';
+
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( dept_no EQ 10 );
+
+QUIT;
+
+PROC SQL;
+
+TITLE1 'STEP 3: Increase all staff salary by 10% for those who work in the department number 10.';
+
+/*
+1 is equal to a whole.
+Imagine 1 as equal to 100%. Now as a decimal, 10% would be 0.1 so when you add 10% to something you multiply by 1.1 as you then have that 1 whole plus the 10%.
+Short-Summary: 1.1 is 110%, 0.1 is 10% and 1 is 100%
+			 : You can extend this idea to decreasing a number to. If you want to decrease by 15% then you need 85% (100% - 15%)of what you had. 85% as a decimal is 0.85.
+*/
+
+UPDATE DMLIBPDK.EMPLOYEE_DS
+SET emp_salary = ( emp_salary * 1.1 ) /* 1.1 refers to 10% increment */
+WHERE ( dept_no EQ 10 );
+
+QUIT;
+
+PROC SQL;
+
+TITLE1 'Delete the dataset DMLIBPDK.EMPLOYEE_DS_BK along with its data dictionary';
+
+DROP TABLE DMLIBPDK.EMPLOYEE_DS_BK; /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+
+QUIT;
+
+/********************************************
+QUESTION 9.2 
+Increase all managers’ salary by 10%.
+Dataset: EMPLOYEE_DS, not DEPARTMENT_DS, why? : because in department there is no variable name emp_salary or salary in this dataset.
+Affected variable: emp_salary
+ANSWER:
+***********************************************/
+
+TITLE1 'STEP 1: Make a back-up of the dataset DMLIBPDK.EMPLOYEE_DS';
+
+PROC SQL;
+
+CREATE TABLE DMLIBPDK.EMPLOYEE_DS_BK AS /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+TITLE1 'STEP 2: Below are the details of all Managers';
+
+PROC SQL;
+
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_job EQ 'MANAGER' );
+
+QUIT;
+
+TITLE1 'STEP 3: Increase all managers’ salary by 10%.';
+
+PROC SQL;
+
+UPDATE DMLIBPDK.EMPLOYEE_DS
+SET emp_salary = ( emp_salary * 1.1 ) /* 1.1 refers to 10% increment */
+WHERE ( emp_job EQ 'MANAGER' );
+
+QUIT;
+
+TITLE1 'STEP 4: Delete the dataset DMLIBPDK.EMPLOYEE_DS_BK along with its data dictionary';
+
+PROC SQL;
+
+DROP TABLE DMLIBPDK.EMPLOYEE_DS_BK; /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+
+QUIT;
+
+/********************************************
+QUESTION 9.3 
+Increase staff salary by 10% for those who are working in the ‘NEW YORK’ department.
+Dataset_involves: EMPLOYEE_DS and DEPARTMENT_DS
+Reasons: because there is no 'NEW YORK' variable in 'EMPLOYEE_DS', but it exist in 'DEPARTMENT_DS'
+       : so we need to use both of it
+ANSWER:
+***********************************************/
+
+TITLE1 'STEP 1: Make a back-up of the dataset DMLIBPDK.EMPLOYEE_DS';
+
+PROC SQL;
+
+CREATE TABLE DMLIBPDK.EMPLOYEE_DS_BK AS /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+TITLE1 'STEP 2: Below are the details of those who are working in the ‘NEW YORK’ department';
+TITLE2  'Inefficient way';
+PROC SQL;
+
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS e, DMLIBPDK.DEPARTMENT_DS d
+WHERE ( ( e.dept_no EQ d.dept_no ) AND 
+	    ( d.dept_loc EQ 'NEW YORK' ) );
+		
+QUIT;
+
+TITLE2 'Efficient way';
+PROC SQL;
+
+SELECT dept_no Label = 'Department Number'
+FROM DMLIBPDK.DEPARTMENT_DS
+WHERE ( dept_loc EQ 'NEW YORK' );
+/* Above a sub-program to find the department number of the department located at New York */
+
+QUIT;
+
+TITLE1 'STEP 3: Combine the efficient sub-program with EMPLOYEE_DS';
+
+PROC SQL;
+
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( dept_no EQ ( SELECT dept_no Label = 'Department Number'
+	    			 FROM DMLIBPDK.DEPARTMENT_DS
+	    			 WHERE ( dept_loc EQ 'NEW YORK' ) ) );
+
+QUIT;
+
+TITLE1 'STEP 4: Increase staff salary by 10% for those who are working in the ‘NEW YORK’ department..';
+
+PROC SQL;
+
+UPDATE DMLIBPDK.EMPLOYEE_DS
+SET emp_salary = ( emp_salary * 1.1 ) /* 1.1 refers to 10% increment on affected variable which is emp_salary*/
+WHERE ( dept_no EQ ( SELECT dept_no Label = 'Department Number'
+	    			 FROM DMLIBPDK.DEPARTMENT_DS
+	    			 WHERE ( dept_loc EQ 'NEW YORK' ) ) );
+					 /* Above a sub-program to find the department number of the department located at New York */
+QUIT;
+
+TITLE1 'STEP 5: Delete the dataset DMLIBPDK.EMPLOYEE_DS_BK along with its data dictionary';
+
+PROC SQL;
+
+DROP TABLE DMLIBPDK.EMPLOYEE_DS_BK; /* DMLIBPDK.EMPLOYEE_DS_BK - It is a back-up copy of the dataset DMLIBPDK.EMPLOYEE_DS */
+
+QUIT;

@@ -1,0 +1,202 @@
+/********************************************
+Name of DS: Mr.Muhammad Fahmi Rosnan (MFR)
+Name of SAS program: myprogram_dm_mar_2022_mfr.sas
+Description:  Learning SAS
+Date first written: Tue,1-Mar-2022
+Date last updated: Wed,2-Mar-2022
+Folder name: DM_CT_MAR_2022_PROJECT_AMIE
+Permanent Library name:DMLIBPDK
+***********************************************/
+
+/********************************************
+QUESTION 3.0
+List the employee name whose name starts with an alphabet ‘J’
+ANSWER:
+***********************************************/
+TITLE1 'List the employee name whose name starts with an alphabet ‘J’';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT emp_name Label = 'Name of Employee' /* if not use 'Label', it's cause a vulnerability or showing unprofessional acts in front of the audience*/
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name LIKE 'J%' ); 
+
+QUIT;
+
+/********************************************
+QUESTION 3.1
+List the employee name whose name starts with the alphabets ‘JA’
+ANSWER:
+***********************************************/
+TITLE1 'List the employee name whose name starts with an alphabet ‘JA’';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT emp_name Label = 'Name of Employee' /* if not use 'Label', it's cause a vulnerability or showing unprofessional acts in front of the audience*/
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name LIKE 'JA%' ); 
+
+QUIT;
+
+/********************************************
+QUESTION 3.2
+List the employee name whose name ends with the alphabet ‘R’
+ANSWER:
+***********************************************/
+TITLE1 'List the employee name whose name starts with an alphabet ‘R’';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT emp_name Label = 'Name of Employee' /* if not use 'Label', it's cause a vulnerability or showing unprofessional acts in front of the audience*/
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name LIKE '%R' ); 
+
+QUIT;
+
+/********************************************
+QUESTION 3.3
+List the employee name whose name starts with ‘M’ and ends with ‘N’
+ANSWER:
+***********************************************/
+TITLE1 'List the employee name whose name starts with ‘M’ and ends with ‘N’';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT emp_name Label = 'Name of Employee' /* if not use 'Label', it's cause a vulnerability or showing unprofessional acts in front of the audience*/
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name LIKE 'M%N' ); 
+
+QUIT;
+
+/********************************************
+QUESTION 3.4
+List the employee name whose name start with the alphabet either ‘K’ or ‘G’.
+ANSWER:
+***********************************************/
+TITLE1 'List the employee name whose name start with the alphabet either ‘K’ or ‘G’';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT emp_name Label = 'Name of Employee' /* if not use 'Label', it's cause a vulnerability or showing unprofessional acts in front of the audience*/
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( ( emp_name LIKE 'K%' ) OR  /* employee name whose name start with the alphabet 'K' OR */
+	    ( emp_name Like 'G%' ) );  /* employee name whose name start with the alphabet 'G' */
+
+QUIT;
+
+/********************************************
+QUESTION 3.5
+List the employee name whose name has the alphabets ‘IN’ (in anywhere).
+ANSWER:
+***********************************************/
+TITLE1 'List the employee name whose name has the alphabets ‘IN’ (in anywhere).';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT emp_name Label = 'Name of Employee' /* if not use 'Label', it's cause a vulnerability or showing unprofessional acts in front of the audience*/
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name LIKE '%IN%' );
+
+
+QUIT;
+
+/********************************************
+QUESTION 4.0
+List the employee details in descending order of their salary.
+ANSWER:
+***********************************************/
+TITLE1 'List the employee details in descending order of their salary.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT * /* All variables found in the dataset(s) involved in the program */
+FROM DMLIBPDK.EMPLOYEE_DS
+ORDER BY emp_salary DESC; /* Data type can be found by go to My Libraries -> Your Library -> Dataset(s) -> Double-click on the name of variables, the windows will pop up and shows the data type */
+
+QUIT;
+
+/********************************************
+QUESTION 4.1
+List the employee details in ascending order of their salary.
+ANSWER:
+***********************************************/
+TITLE1 'List the employee details in ascending order of their salary.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT * /* All variables found in the dataset(s) involved in the program */
+FROM DMLIBPDK.EMPLOYEE_DS
+ORDER BY emp_salary; 
+
+QUIT;
+
+/********************************************
+QUESTION 4.2
+List the employee details in descending order of their names.
+ANSWER:
+***********************************************/
+TITLE1 'List the employee details in descending order of their names.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT * /* All variables found in the dataset(s) involved in the program */
+FROM DMLIBPDK.EMPLOYEE_DS
+ORDER BY emp_name DESC; 
+
+QUIT;
+
+/********************************************
+QUESTION 4.3
+List the employee details in ascending order of their names. Show employee number, name, and salary
+ANSWER:
+***********************************************/
+TITLE1 'List the employee details in ascending order of their names. Show employee number, name, and salary';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT emp_no Label = 'Employee Number', 
+	   emp_name Label = 'Name', 
+	   emp_salary Label = 'Salary' 
+FROM DMLIBPDK.EMPLOYEE_DS
+ORDER BY emp_name; 
+
+QUIT;
+
+/********************************************
+QUESTION 4.3
+List the employee details in ascending order of their names. Show employee number, name, and salary
+ANSWER:
+***********************************************/
+TITLE1 'List the employee details in ascending order of their names. Show employee number, name, and salary';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT emp_no Label = 'Employee Number', 
+	   emp_name Label = 'Name', 
+	   emp_salary Label = 'Salary' 
+FROM DMLIBPDK.EMPLOYEE_DS
+ORDER BY emp_name; 
+
+QUIT;

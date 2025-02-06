@@ -1,0 +1,179 @@
+/********************************************
+Name of DS: Mr.Muhammad Fahmi Rosnan (MFR)
+Name of SAS program: myprogram_dm_mar_2022_mfr.sas
+Description:  Learning SAS
+Date first written: Tue,1-Mar-2022
+Date last updated: Wed,9-Mar-2022
+Folder name: DM_CT_MAR_2022_PROJECT_AMIE
+Permanent Library name:DMLIBPDK
+***********************************************/
+
+/********************************************
+QUESTION 8.1
+List the name and job of employees, who have the same job as ‘JONES’.
+ANSWER:
+***********************************************/
+
+PROC SQL;
+
+TITLE1 'STEP 1: Find the job position of the Ms.Jones';
+
+SELECT emp_job Label = 'Job of Ms.Jones'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name EQ 'JONES' ); /* This is sub-program to find the job of Ms.Jones */
+
+TITLE1 'STEP 2: List the name and job of employees, who have the same job as ‘JONES’.';
+
+SELECT eo.emp_name Label = 'Employee Name',
+	   eo.emp_job Label = 'Job'
+FROM DMLIBPDK.EMPLOYEE_DS eo    /* eo means employee outside of sub-program */
+WHERE ( ( eo.emp_name NE 'JONES' ) AND 
+	    ( eo.emp_job EQ ( SELECT ei.emp_job Label = 'Job of Ms.Jones'
+                       FROM DMLIBPDK.EMPLOYEE_DS ei			   /* ei means employee inside of sub-program */
+                       WHERE ( ei.emp_name EQ 'JONES' ) ) ) ); /* This is sub-program to find the job of Ms.Jones */
+
+QUIT;
+
+/********************************************
+QUESTION 8.2
+Find the staff-name, who receives the highest salary.
+ANSWER:
+***********************************************/
+
+PROC SQL;
+
+TITLE 'STEP 1: Find the highest salary.';
+
+SELECT MAX(emp_salary) Label = 'Highest Salary'
+FROM DMLIBPDK.EMPLOYEE_DS;
+/* Above is a sub-program to find the highest salary */
+
+TITLE 'STEP 2: Find the staff-name, who receives the highest salary.';
+
+SELECT emp_name Label = 'Name of Employee'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE emp_salary EQ ( SELECT MAX(emp_salary) Label = 'Highest Salary'
+		              FROM DMLIBPDK.EMPLOYEE_DS );
+
+QUIT;
+
+/********************************************
+QUESTION 8.3
+Find the staff-name, who receives the lowest salary.
+ANSWER:
+***********************************************/
+
+PROC SQL;
+
+TITLE 'STEP 1: Find the lowest salary.';
+
+SELECT MIN(emp_salary) Label = 'Lowest Salary'
+FROM DMLIBPDK.EMPLOYEE_DS;
+/* Above is a sub-program to find the lowest salary */
+
+TITLE 'STEP 2: Find the staff-name, who receives the lowest salary.';
+
+SELECT emp_name Label = 'Name of Employee'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE emp_salary EQ ( SELECT MIN(emp_salary) Label = 'Lowest Salary'
+		              FROM DMLIBPDK.EMPLOYEE_DS );
+
+QUIT;
+
+/********************************************
+QUESTION 8.4
+List the name, job, and salary of employees, who have the same job position and salary as 'Ford'.
+ANSWER:
+***********************************************/
+
+PROC SQL;
+
+TITLE 'STEP 1: Find the job position of Ford';
+
+SELECT emp_job Label = 'Job of Mr.Ford'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name EQ 'FORD');
+/* Above is a sub-program to Find the job position of Mr.Ford */
+
+TITLE 'STEP 2: Find the job salary of Ford';
+
+SELECT emp_salary Label = 'Salary of Mr.Ford'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name EQ 'FORD' );
+/* Above is a sub-program to Find the salary of Mr.Ford */
+
+TITLE 'STEP 3: List the name, job, and salary of employees, who have the same job position and salary as 'Ford'';
+
+SELECT emp_name Label = 'Name of Employee',
+       emp_job Label = 'Job',
+       emp_salary Label = 'Salary'
+FROM DMLIBPDK.EMPLOYEE_DS 
+WHERE 
+( ( emp_name NE 'FORD' ) AND /* To stop Mr.Ford name appear in the final result */
+  ( emp_job EQ ( SELECT emp_job Label = 'Job of Mr.Ford'
+                 FROM DMLIBPDK.EMPLOYEE_DS
+	             WHERE ( emp_name EQ 'FORD' ) ) ) AND
+				 /* Above is a sub-program to find the job of Mr.Ford */
+  ( emp_salary EQ ( SELECT emp_salary Label = 'Salary of Mr.Ford'
+	               	FROM DMLIBPDK.EMPLOYEE_DS
+				WHERE ( emp_name EQ 'FORD' ) ) ) );
+				/* Above is a sub-program to find the salary of Mr.Ford */
+QUIT;
+
+/********************************************
+QUESTION 8.5
+List the name, job, and department of employee, whose salary is greater than or equal to ‘Ford’.
+ANSWER:
+***********************************************/
+PROC SQL;
+
+TITLE 'STEP 1: Find the salary of Ford';
+
+SELECT emp_salary Label = 'Salary of Mr.Ford'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name EQ 'FORD' );
+/* Above is a sub-program to Find the salary of Mr.Ford */
+
+TITLE 'STEP 2: List the name, job, and department of employee, whose salary is greater than or equal to ‘Ford’.';
+
+SELECT e.emp_name Label = 'Name of Employee',
+       e.emp_job Label = 'Job',
+       e.emp_salary Label = 'Salary',
+       d.dept_name Label = 'Department Name'
+FROM DMLIBPDK.EMPLOYEE_DS e, DMLIBPDK.DEPARTMENT_DS d
+WHERE ( ( e.dept_no EQ d.dept_no ) AND
+        ( emp_name NE 'FORD' ) AND /* To stop Mr.Ford name appear in the final result */
+        ( e.emp_salary GE ( SELECT emp_salary Label = 'Salary of Mr.Ford'
+	               	        FROM DMLIBPDK.EMPLOYEE_DS
+				            WHERE ( emp_name EQ 'FORD' ) ) ) );
+				            /* Above is a sub-program to find the salary of Mr.Ford */
+QUIT;
+
+/********************************************
+QUESTION 8.6
+Find the details of employees located in Chicago and who have the same job as Allen. 
+List the results in an alphabetical order by employee name.
+ANSWER:
+***********************************************/
+PROC SQL;
+
+TITLE1 'Find the job of Mr. Allen';
+
+SELECT emp_job Label = 'Job of Mr. Allen '
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name EQ 'ALLEN' ); 
+/* Above is a sub-program to find the job of Mr.Allen   */
+
+TITLE1 'Find the details of employees located in Chicago and who have the same job as Allen.';
+TITLE2 'List the results in an alphabetical order by employee name.';
+
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS e, DMLIBPDK.DEPARTMENT_DS d
+WHERE ( ( e.dept_no EQ d.dept_no ) AND 
+	    ( d.dept_loc EQ 'CHICAGO' ) AND
+	    ( e.emp_job EQ ( SELECT emp_job Label = 'Job of Mr. Allen '
+		                 FROM DMLIBPDK.EMPLOYEE_DS
+		                 WHERE ( emp_name EQ 'ALLEN' ) ) ) ); 
+		                 /* Above is a sub-program to find the job of Mr.Allen   */
+
+QUIT;

@@ -1,0 +1,208 @@
+/********************************************
+Name of DS: Mr.Muhammad Fahmi Rosnan (MFR)
+Name of SAS program: myprogram_dm_mar_2022_mfr.sas
+Description:  Learning SAS
+Date first written: Tue,1-Mar-2022
+Date last updated: Wed,9-Mar-2022
+Folder name: DM_CT_MAR_2022_PROJECT_AMIE
+Permanent Library name:DMLIBPDK
+***********************************************/
+
+/********************************************
+QUESTION 6.1
+Find the name, salary and department name of employees who working at ‘DALLAS’. List the observations in an ascending order of employee salary.
+Dataset involves: 'DEPARTMENT_DS' and 'EMPLOYMENT_DS'
+ANSWER:
+***********************************************/
+TITLE1 'Find the name, salary and department name of employees who working at ‘DALLAS’. List the observations in an ascending order of employee salary.';
+FOOTNOTE '--------------------------End----------------------------------';
+
+/* Step 1 */
+PROC SQL;
+
+SELECT *
+FROM DMLIBPDK.EMPLOYEE_DS e, DMLIBPDK.DEPARTMENT_DS d
+WHERE ( e.dept_no EQ d.dept_no );
+
+QUIT;
+
+/* Step 2 */
+PROC SQL;
+
+SELECT e.emp_name Label = 'Employee Name',
+	e.emp_salary Label = 'Salary',
+	d.dept_name Label = 'Department Name'
+	
+FROM DMLIBPDK.EMPLOYEE_DS e, DMLIBPDK.DEPARTMENT_DS d
+WHERE ( e.dept_no EQ d.dept_no );
+
+QUIT;
+
+/* Step 3.1: Inefficient Ways */
+PROC SQL;
+
+SELECT e.emp_name Label = 'Employee Name',
+	e.emp_salary Label = 'Salary',
+	d.dept_name Label = 'Department Name'
+	
+FROM DMLIBPDK.EMPLOYEE_DS e, DMLIBPDK.DEPARTMENT_DS d
+WHERE ( ( e.dept_no EQ d.dept_no ) AND 
+		( d.dept_loc EQ	'DALLAS' ) )
+
+ORDER BY e.emp_salary;
+
+QUIT;
+
+/* Step 3.2: Sub-program */
+TITLE1 'Find the name, salary and department name of employees who working at ‘DALLAS’.';
+TITLE2 'List the observations in an ascending order of employee salary.';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+( SELECT dept_no Label = 'Department Name'
+  FROM DMLIBPDK.DEPARTMENT_DS
+  WHERE ( dept_loc EQ 'DALLAS' ) );
+/* It is a sub-program to find the department of department process located in DALLAS */
+
+QUIT;
+
+/* Step 3.3: More Efficient Ways Use Sub-Program */
+TITLE1 'Find the name, salary and department name of employees who working at ‘DALLAS’.';
+TITLE2 'List the observations in an ascending order of employee salary.';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT e.emp_name Label = 'Employee Name',
+	e.emp_salary Label = 'Salary',
+	d.dept_name Label = 'Department Name'
+	
+FROM DMLIBPDK.EMPLOYEE_DS e, DMLIBPDK.DEPARTMENT_DS d
+WHERE ( e.dept_no EQ d.dept_no ) AND 
+
+e.dept_no EQ ( SELECT dept_no Label = 'Department Number'
+  			   FROM DMLIBPDK.DEPARTMENT_DS
+               WHERE ( dept_loc EQ 'DALLAS' ) )
+               /* It is a sub-program to find the department of department process located in DALLAS */
+
+ORDER BY e.emp_salary;
+
+QUIT;
+
+/********************************************
+QUESTION 6.2
+Find the employees (name, number, department name, salary), who earn more than ‘JONES’.
+ANSWER:
+***********************************************/
+
+PROC SQL;
+
+TITLE 'STEP 1 - Find the salary of Ms.Jones';
+
+SELECT emp_salary Label = 'Employee Salary'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_name EQ 'JONES');
+/* Above is a sub-program to find the salary of Ms.Jones */
+
+
+TITLE1 'STEP 2 - Find the employees (name, number, department name, salary), who earn more than ‘JONES';
+
+SELECT e.emp_name Label = 'Employee Name',
+       e.emp_no Label = 'Number',
+       d.dept_name Label = 'Department Name',
+       e.emp_salary Label = 'Salary'
+
+FROM DMLIBPDK.EMPLOYEE_DS e, DMLIBPDK.DEPARTMENT_DS d
+
+WHERE ( e.dept_no EQ d.dept_no ) AND 
+ 
+e.emp_salary GT ( SELECT emp_salary Label = 'Employee Salary'
+                  FROM DMLIBPDK.EMPLOYEE_DS
+                  WHERE ( emp_name EQ 'JONES') );
+                  /* Above is a sub-program to find the salary of Ms.Jones */
+
+QUIT;
+
+/********************************************
+QUESTION 7.1
+List the department number and sum of salaries of all staff of each department.
+ANSWER:
+***********************************************/
+
+TITLE1 'List the department number and sum of salaries of all staff of each department.';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT dept_no Label = 'Department Number',
+	   SUM(emp_salary) Label = 'Total Salary'
+
+FROM DMLIBPDK.EMPLOYEE_DS
+
+GROUP BY dept_no;
+
+QUIT;
+
+/********************************************
+QUESTION 7.2
+List the department number and number of employees working in each department.
+ANSWER:
+***********************************************/
+
+TITLE1 'List the department number and total number of employees working in each department.';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT dept_no Label = 'Department Number',
+	   COUNT(*) Label = 'Number of Employees'
+
+FROM DMLIBPDK.EMPLOYEE_DS
+
+GROUP BY dept_no;
+
+QUIT;
+
+/********************************************
+QUESTION 7.3
+List the department number which has a minimum of four employees.
+ANSWER:
+***********************************************/
+
+TITLE1 'List the department number which has a minimum of four employees.';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT dept_no Label = 'Department Number',
+	   COUNT(*) Label = 'Number of Employees'
+
+FROM DMLIBPDK.EMPLOYEE_DS
+
+GROUP BY dept_no
+
+HAVING COUNT(*) GE 4;
+/* HAVING is used to filter groups while WHERE is used to filter the observations == rows == records */
+
+QUIT;
+
+/********************************************
+QUESTION 7.4
+List the department number, which has at least two clerks.
+ANSWER:
+***********************************************/
+
+TITLE1 'List the department number, which has at least two clerks.';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT dept_no Label = 'Department Number',
+	   COUNT(*) Label = 'Number of Employees'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_job EQ 'CLERK' ) /* WHERE filters the OBSERVATIONS, which are relevant to Clerks */
+GROUP BY dept_no
+HAVING COUNT(*) GE 2; /* HAVING filters the GROUPS with at least 2 Clerks */
+
+QUIT;

@@ -1,0 +1,19 @@
+/********************************************
+Name of DS: Mr.Muhammad Fahmi Rosnan (MFR)
+Name of SAS program: DM_CT_MAR_2022_COUNT_OBERSVATION_VARIABLES_AMIE.sas
+Description:  Side Note
+Date first written: Wed,1-Mar-2022
+Date last updated: Wed,2-Mar-2022
+Folder name: DM_CT_MAR_2022_PROJECT_AMIE
+Permanent Library name:DMLIBPDK
+***********************************************/
+
+TITLE1 'To count the number of observations the dataset(s) - EMPLOYEE_DS has.';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT COUNT(*) Label = 'Number of Observations' /* Use COUNT clause to count the number of observations in the dataset(s) - EMPLOYEE_DS has. */
+FROM DMLIBPDK.EMPLOYEE_DS
+
+QUIT;

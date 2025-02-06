@@ -1,0 +1,231 @@
+/********************************************
+Name of DS: Mr.Muhammad Fahmi Rosnan (MFR)
+Name of SAS program: myprogram_dm_mar_2022_mfr.sas
+Description:  Learning SAS
+Date first written: Tue,1-Mar-2022
+Date last updated: Wed,2-Mar-2022
+Folder name: DM_CT_MAR_2022_PROJECT_AMIE
+Permanent Library name:DMLIBPDK
+***********************************************/
+
+/********************************************
+QUESTION 5.0
+Find out how many managers work there.
+ANSWER:
+***********************************************/
+TITLE1 'Find out how many managers work there.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT COUNT(*) Label = 'Number of Managers' 
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_job EQ 'MANAGER' ); 
+
+QUIT;
+
+/********************************************
+QUESTION 5.1
+Find out how many salesmen work there.
+ANSWER:
+***********************************************/
+TITLE1 'Find out how many salesmen work there.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT COUNT(*) Label = 'Number of Salesman' 
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_job EQ 'SALESMAN' ); 
+
+QUIT;
+
+/********************************************
+QUESTION 5.2
+Find out how many salesmen work there in the department number 30.
+ANSWER:
+***********************************************/
+TITLE1 'Find out how many salesmen work there in the department number 30.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT COUNT(*) Label = 'Number of Salesman' 
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( ( emp_job EQ 'SALESMAN' ) AND 
+		( dept_no EQ 30 ) ); 
+
+QUIT;
+
+/********************************************
+QUESTION 5.3
+Find out the highest salary.
+ANSWER:
+***********************************************/
+TITLE1 'Find out the highest salary.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT MAX(emp_salary) Label = 'Highest Salary' 
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+/********************************************
+QUESTION 5.4
+Find out the lowest salary.
+ANSWER:
+***********************************************/
+TITLE1 'Find out the lowest salary.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT MIN(emp_salary) Label = 'Lowest Salary' 
+FROM DMLIBPDK.EMPLOYEE_DS
+
+QUIT;
+
+/********************************************
+QUESTION 5.5
+Find out the sum of salaries of all employees.
+ANSWER:
+***********************************************/
+TITLE1 'Find out the sum of salaries of all employees.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT SUM(emp_salary) Label = 'Total Salary' 
+FROM DMLIBPDK.EMPLOYEE_DS;
+
+QUIT;
+
+/********************************************
+QUESTION 5.6
+Find out the sum of salaries of the employees who work in the department number 10.
+ANSWER:
+***********************************************/
+TITLE1 'Find out the sum of salaries of the employees who work in the department number 10.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT SUM(emp_salary) Label = 'Total Salary'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( dept_no EQ 10 );
+
+QUIT;
+
+/********************************************
+QUESTION 5.7
+Find out the sum of salaries of the employees who work in the department number 10 or 20
+ANSWER:
+***********************************************/
+TITLE1 'A-Option Find out the sum of salaries of the employees who work in the department number 10 or 20.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT SUM(emp_salary) Label = 'Number of Employees'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( ( dept_no EQ 10 ) OR 
+		( dept_no EQ 20 ) ); /* Inefficient, lenghty and slow */
+
+QUIT;
+
+TITLE1 'B-Option (Best Option) Find out the sum of salaries of the employees who work in the department number 10 or 20.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT SUM(emp_salary) Label = 'Number of Employees'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( dept_no IN (10,20) );   /* More efficient, short and faster than above codes */
+
+QUIT;
+
+/********************************************
+QUESTION 5.8
+Count the number of staff working in the department number 30
+ANSWER:
+***********************************************/
+TITLE1 'Count the number of staff working in the department number 30.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT COUNT(*) Label = 'Number of Employees'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( dept_no EQ 30 );
+
+QUIT;
+
+/********************************************
+QUESTION 5.9
+Count the number of staff whose salary is  greater  than or equal to 3000
+ANSWER:
+***********************************************/
+TITLE1 'Count the number of staff whose salary is  greater  than or equal to 3000.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT COUNT(*) Label = 'Number of Employees'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_salary GE 3000 );
+
+QUIT;
+
+/********************************************
+QUESTION 5.10
+Count the number of staff whose salary is between 1200 and 1500
+Answer:
+***********************************************/
+TITLE1 'A-Option Count the number of staff whose salary is between 1200 and 1500.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT COUNT(*) Label = 'Number of Employees'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( ( emp_salary GE 1200 ) AND 
+        ( emp_salary LE 1500 ) );
+
+QUIT;
+
+TITLE1 'B-Option (Best Option) Count the number of staff whose salary is between 1200 and 1500.';
+TITLE2 'APU';
+FOOTNOTE '--------------------------End----------------------------------';
+
+PROC SQL;
+
+SELECT COUNT(*) Label = 'Number of Employees'
+FROM DMLIBPDK.EMPLOYEE_DS
+WHERE ( emp_salary BETWEEN 1200 AND 1500 );
+
+QUIT;
+
+
+
+
+
+
+
+
+
+
+

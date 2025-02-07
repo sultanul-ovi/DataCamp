@@ -75,3 +75,7 @@ No one enjoys looking at spreadsheets! Bring your data to life. Improve your pre
 ## Project 02: Analyzing Motorcycle Part Sales
 
 Derive insights about motorcycle part sales over time across multiple warehouse sites!
+
+---
+
+Feel free to explore the solutions and contribute to the repository. Thanks

@@ -111,14 +111,14 @@ TOP (10);
 
 ### Incorrect Syntax
 
-#### ❌ Wrong:
+#### ❌ Wrong
 
 ```sql
 SELECT author AS unique_author
 FRPM books;
 ```
 
-#### ✅ Correct:
+#### ✅ Correct
 
 ```sql
 SELECT author AS unique_author

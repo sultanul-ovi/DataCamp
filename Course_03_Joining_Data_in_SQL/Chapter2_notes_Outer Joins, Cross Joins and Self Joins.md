@@ -1,7 +1,9 @@
 ### This is a LEFT JOIN, right?
-__________________________________
+
+---
+
 ```sql
-SELECT 
+SELECT
     c1.name AS city,
     code,
     c2.name AS country,
@@ -9,15 +11,15 @@ SELECT
     city_proper_pop
 FROM cities AS c1
 -- Perform an inner join with cities as c1 and countries as c2 on country code
-inner join countries as c2 
+inner join countries as c2
 on c1.country_code = c2.code
 ORDER BY code DESC;
 
-SELECT 
-	c1.name AS city, 
-    code, 
+SELECT
+	c1.name AS city,
+    code,
     c2.name AS country,
-    region, 
+    region,
     city_proper_pop
 FROM cities AS c1
 -- Join right table (with alias)
@@ -27,7 +29,9 @@ ORDER BY code DESC;
 ```
 
 ### Building on your LEFT JOIN
-__________________________________
+
+---
+
 ```sql
 SELECT name, region, gdp_percapita
 FROM countries AS c
@@ -59,7 +63,9 @@ limit 10;
 ```
 
 ### Is this RIGHT?
-__________________________________
+
+---
+
 ```sql
 -- Modify this query to use RIGHT JOIN instead of LEFT JOIN
 SELECT countries.name AS country, languages.name AS language, percent
@@ -70,7 +76,9 @@ ORDER BY language;
 ```
 
 ### Comparing joins
-__________________________________
+
+---
+
 ```sql
 SELECT name AS country, code, region, basic_unit
 FROM countries
@@ -86,7 +94,7 @@ FROM countries
 -- Join to currencies
 left join currencies
 USING (code)
-WHERE region = 'North America' 
+WHERE region = 'North America'
 	OR name IS NULL
 ORDER BY region;
 
@@ -95,21 +103,23 @@ FROM countries
 -- Join to currencies
 inner join currencies
 USING (code)
-WHERE region = 'North America' 
+WHERE region = 'North America'
 	OR name IS NULL
 ORDER BY region;
 ```
 
 ### Chaining FULL JOINs
-__________________________________
+
+---
+
 ```sql
-SELECT 
-	c1.name AS country, 
-    region, 
+SELECT
+	c1.name AS country,
+    region,
     l.name AS language,
-	basic_unit, 
+	basic_unit,
     frac_unit
-FROM countries as c1 
+FROM countries as c1
 -- Full join with languages (alias as l)
 full join languages as l
 using (code)
@@ -120,18 +130,20 @@ WHERE region LIKE 'M%esia';
 ```
 
 ### Histories and languages
-__________________________________
+
+---
+
 ```sql
 SELECT c.name AS country, l.name AS language
 -- Inner join countries as c with languages as l on code
-from countries as c 
+from countries as c
 inner join languages as l
 using(code)
 WHERE c.code IN ('PAK','IND')
 	AND l.code in ('PAK','IND');
 
 SELECT c.name AS country, l.name AS language
-FROM countries AS c        
+FROM countries AS c
 -- Perform a cross join to languages (alias as l)
 cross join languages as l
 WHERE c.code in ('PAK','IND')
@@ -139,7 +151,9 @@ WHERE c.code in ('PAK','IND')
 ```
 
 ### Choosing your join
-__________________________________
+
+---
+
 ```sql
 -- Select fields
 SELECT c.name AS country, region, life_expectancy AS life_exp
@@ -158,7 +172,9 @@ LIMIT 5;
 ```
 
 ### Comparing a country to itself
-__________________________________
+
+---
+
 ```sql
 -- Select aliased fields from populations as p1
 select p1.country_code,p1.size as size2010, p2.size as size2015
@@ -167,9 +183,9 @@ from populations as p1
 inner join populations as p2
 using(country_code)
 
-SELECT 
-	p1.country_code, 
-    p1.size AS size2010, 
+SELECT
+	p1.country_code,
+    p1.size AS size2010,
     p2.size AS size2015
 FROM populations AS p1
 INNER JOIN populations AS p2

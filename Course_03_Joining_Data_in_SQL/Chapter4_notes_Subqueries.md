@@ -1,5 +1,7 @@
 ### Semi join
-____________________________
+
+---
+
 ```sql
 -- Select country code for countries in the Middle East
 Select code from countries
@@ -22,7 +24,9 @@ ORDER BY name;
 ```
 
 ### Diagnosing problems using anti join
-____________________________
+
+---
+
 ```sql
 -- Select code and name of countries from Oceania
 select code,name from countries
@@ -38,7 +42,9 @@ WHERE continent = 'Oceania'
 ```
 
 ### Subquery inside WHERE
-____________________________
+
+---
+
 ```sql
 -- Select average life_expectancy from the populations table
 select avg(life_expectancy) from populations
@@ -51,12 +57,14 @@ FROM populations
 WHERE life_expectancy > 1.15 *
   (SELECT AVG(life_expectancy)
    FROM populations
-   WHERE year = 2015) 
+   WHERE year = 2015)
     AND year = 2015;
 ```
 
 ### WHERE do people live?
-____________________________
+
+---
+
 ```sql
 -- Select relevant fields from cities table
 select name, country_code, urbanarea_pop from cities
@@ -66,7 +74,9 @@ ORDER BY urbanarea_pop DESC;
 ```
 
 ### Subquery inside SELECT
-____________________________
+
+---
+
 ```sql
 -- Find top nine countries with the most cities
 select countries.name as country, count(*) as cities_num from countries
@@ -78,7 +88,7 @@ order by cities_num desc,country desc
 limit 9;
 
 SELECT countries.name AS country,
--- Subquery that provides the count of cities   
+-- Subquery that provides the count of cities
   (SELECT count(*)
    FROM cities
    WHERE countries.code=cities.country_code) AS cities_num
@@ -88,7 +98,9 @@ LIMIT 9;
 ```
 
 ### Subquery inside FROM
-____________________________
+
+---
+
 ```sql
 -- Select code, and language count as lang_num
 select code, count(*) as lang_num
@@ -96,7 +108,7 @@ from languages
 group by code
 
 -- Select local_name and lang_num from appropriate tables
-select local_name, lang_num from countries, 
+select local_name, lang_num from countries,
   (SELECT code, COUNT(*) AS lang_num
   FROM languages
   GROUP BY code) AS sub
@@ -106,12 +118,14 @@ ORDER BY lang_num DESC;
 ```
 
 ### Subquery challenge
-____________________________
+
+---
+
 ```sql
 -- Select relevant fields
 SELECT code, inflation_rate, unemployment_rate
 FROM economies
-WHERE year = 2015 
+WHERE year = 2015
   AND code NOT IN
 -- Subquery returning country codes filtered on gov_form
     (SELECT code
@@ -121,7 +135,9 @@ ORDER BY inflation_rate;
 ```
 
 ### Final challenge
-____________________________
+
+---
+
 ```sql
 -- Select fields from cities
 select name,country_code,city_proper_pop,metroarea_pop,(city_proper_pop/metroarea_pop*100) as city_perc from cities

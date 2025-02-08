@@ -1,24 +1,3 @@
-========================CHAPTER 1
-COUNT() {counts num of record with a value in a field}
-COUNT(field_name) - counts values in a field
-COUNT(*) counts records in a table
--------------------------
-SELECT COUNT(birthdate) AS count_birthdates
-FROM people;
-
-SELECT COUNT(birthdate) AS count_birthdates, COUNT(name) AS count_names
-FROM people;
-
-SELECT COUNT(DISTINCT birthdate) AS count_birthdates
-FROM people;
-
-SELECT COUNT(*) AS total_records
-FROM people;
-
-SELECT COUNT(*) AS total_records
-FROM people;
-
-
 
 ========================CHAPTER 2
 

@@ -1,5 +1,7 @@
 ### Sorting single fields
-_______________________________
+
+---
+
 ```sql
 -- Select name from people and sort alphabetically
 select name from people
@@ -11,7 +13,9 @@ order by duration desc
 ```
 
 ### Sorting multiple fields
-_______________________________
+
+---
+
 ```sql
 -- Select the release year, duration, and title sorted by release year and duration
 select release_year,duration,title from films
@@ -23,7 +27,9 @@ order by certification,release_year desc
 ```
 
 ### GROUP BY single fields
-_______________________________
+
+---
+
 ```sql
 -- Find the release_year and film_count of each year
 select release_year,count(*) as film_count
@@ -36,7 +42,9 @@ group by release_year
 ```
 
 ### GROUP BY multiple fields
-_______________________________
+
+---
+
 ```sql
 -- Find the release_year, country, and max_budget, then group and order by release_year and country
 select release_year,country,max(budget) as max_budget
@@ -46,10 +54,12 @@ order by release_year,country
 ```
 
 ### Filter with HAVING
-_______________________________
+
+---
+
 ```sql
 -- Select the country and distinct count of certification as certification_count
-select country,count(distinct(certification)) as certification_count from films 
+select country,count(distinct(certification)) as certification_count from films
 -- Group by country
 group by country
 -- Filter results to countries with more than 10 different certifications
@@ -57,7 +67,9 @@ having count(distinct(certification)) > 10;
 ```
 
 ### HAVING and sorting
-_______________________________
+
+---
+
 ```sql
 -- Select the country and average_budget from films
 select country, round(avg(budget),2) as average_budget from films
@@ -70,7 +82,9 @@ order by average_budget desc
 ```
 
 ### All together now
-_______________________________
+
+---
+
 ```sql
 -- Select the release_year for films released after 1990 grouped by year
 select release_year from films

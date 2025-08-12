@@ -1,0 +1,77 @@
+
+#  Build a histogram (2): bins
+
+```
+Exercise ID 15601
+```
+
+##  Assignment 
+
+In the previous exercise, you didn't specify the number of bins. By default, Python sets the number of bins to 10 in that case. The number of bins is pretty important. Too few bins will oversimplify reality and won't show you the details. Too many bins will overcomplicate reality and won't show the bigger picture.
+
+To control the number of bins to divide your data in, you can set the `bins` argument.
+
+That's exactly what you'll do in this exercise. You'll be making two plots here. The code in the script already includes `plt.show()` and `plt.clf()` calls; `plt.show()` displays a plot; `plt.clf()` cleans it up again so you can start afresh.
+
+As before, `life_exp` is available and `matplotlib.pyplot` is imported as `plt`.
+
+##  Pre exercise code 
+
+```
+import matplotlib.pyplot as plt; import importlib; importlib.reload(plt)
+import pandas as pd
+plt.clf()
+df = pd.read_csv('https://assets.datacamp.com/course/intermediate_python/gapminder.csv', index_col = 0)
+life_exp = list(df.life_exp)
+```
+
+
+
+##  Instructions 
+
+- Build a histogram of `life_exp`, with `5` bins. Can you tell which bin contains the most observations?
+- Build another histogram of `life_exp`, this time with `20` bins. Is this better?
+
+
+
+```
+# Build histogram with 5 bins
+
+
+# Show and clean up plot
+plt.show()
+plt.clf()
+
+# Build histogram with 20 bins
+
+
+# Show and clean up again
+plt.show()
+plt.clf()
+```
+
+##  Hints 
+
+- In both cases, your call should look like this: `plt.hist(life_exp, bins = ___)`. Make sure to specify `___` appropriately.
+
+
+
+##  Solution 
+
+```
+# Build histogram with 5 bins
+plt.hist(life_exp, bins = 5)
+
+# Show and clear plot
+plt.show()
+plt.clf()
+
+# Build histogram with 20 bins
+plt.hist(life_exp, bins = 20)
+
+# Show and clear plot again
+plt.show()
+plt.clf()
+```
+
+
